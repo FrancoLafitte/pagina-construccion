@@ -45,7 +45,7 @@ export default async function ProyectoDetallePage({
   ]
 
   return (
-    <article className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+    <article className="mx-auto max-w-7xl px-4 pt-6 pb-10 sm:px-6 lg:px-8 lg:pt-8 lg:pb-16">
       <Link
         href="/proyectos"
         className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"

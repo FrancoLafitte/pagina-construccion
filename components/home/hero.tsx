@@ -41,15 +41,6 @@ export function Hero() {
               Explorar proyectos
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              href="/#enfoque"
-              className={cn(
-                buttonVariants({ size: 'lg', variant: 'outline' }),
-                'h-12 px-6 text-base bg-background/60 backdrop-blur',
-              )}
-            >
-              Conocer la empresa
-            </Link>
           </div>
         </div>
       </div>

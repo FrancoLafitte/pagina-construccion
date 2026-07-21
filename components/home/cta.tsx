@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
-
+/*
 export function CTA() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
@@ -23,6 +23,35 @@ export function CTA() {
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+      </div>
+    </section>
+  )
+}
+*/
+
+export function CTA() {
+  return (
+    <section className="relative w-full py-8 md:py-12 bg-primary/5 border-y border-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        {/* Título más chico */}
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
+          ¿Tenés alguna idea o proyecto en mente?
+        </h2>
+
+        {/* Subtítulo más compacto */}
+        <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto mb-6">
+          Contactanos y hagamos realidad tu próxima construcción con el mejor asesoramiento profesional.
+        </p>
+
+        {/* Botón con padding más chico */}
+        <a
+          href="/contacto"
+          className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-medium text-sm transition-all hover:opacity-90 shadow-md"
+        >
+          Contactanos
+        </a>
+
       </div>
     </section>
   )
