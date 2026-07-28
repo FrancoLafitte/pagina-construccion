@@ -20,6 +20,12 @@ export type TipoProyecto =
   | 'Uso mixto'
   | 'Urbanismo'
 
+export interface MediaItem {
+  tipo: 'imagen' | 'video';
+  url: string;
+  poster?: string; // Opcional, por si querés ponerle una miniatura al video
+}
+
 export interface Proyecto {
   slug: string
   nombre: string
@@ -36,7 +42,7 @@ export interface Proyecto {
   /** Párrafos de la descripción completa (uno por elemento del array). */
   descripcion: string[]
   imagenPortada: string
-  galeria: { src: string; alt: string }[]
+  galeria: { tipo: 'imagen' | 'video'; src: string; alt: string }[]
   /** Ruta a un archivo de video .mp4, o null si todavía no hay. */
   video: string | null
   destacado?: boolean
@@ -62,22 +68,22 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/florida-828/fachada-2.jpg',
     galeria: [
-      { src: '/proyectos/florida-828/fachada-2.jpg', alt: 'Fachada de Torre Florida 828 al atardecer' },
-      { src: '/proyectos/florida-828/living-1.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
-      { src: '/proyectos/florida-828/living-2.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
-      { src: '/proyectos/florida-828/cocina-1.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
-      { src: '/proyectos/florida-828/cocina-2.jpg', alt: 'Avance de obra de Torre Florida 828' },
-      { src: '/proyectos/florida-828/dormitorio.jpg', alt: 'Avance de obra de Torre Florida 828' },
-      { src: '/proyectos/florida-828/bano-1.jpg', alt: 'Avance de obra de Torre Florida 828' },
-      { src: '/proyectos/florida-828/bano-2.jpg', alt: 'Avance de obra de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/fachada-2.jpg', alt: 'Fachada de Torre Florida 828 al atardecer' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/living-1.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/living-2.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/cocina-1.jpg', alt: 'Lobby de doble altura de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/cocina-2.jpg', alt: 'Avance de obra de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/dormitorio.jpg', alt: 'Avance de obra de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/bano-1.jpg', alt: 'Avance de obra de Torre Florida 828' },
+      { tipo: 'imagen', src: '/proyectos/florida-828/bano-2.jpg', alt: 'Avance de obra de Torre Florida 828' },
     ],
     video: null,
     destacado: true,
   },
   {
-    slug: 'mirador-del-parque',
-    nombre: 'Mirador del Parque',
-    ubicacion: 'Palermo, Buenos Aires',
+    slug: 'torre-guemes-336',
+    nombre: 'Guemes 336',
+    ubicacion: 'Bahia Blanca, Buenos Aires',
     estado: 'Finalizado',
     tipo: 'Residencial',
     anio: 2023,
@@ -87,13 +93,16 @@ export const proyectos: Proyecto[] = [
     resumen:
       'Edificio residencial frente al parque, con balcones aterrazados y terminaciones premium.',
     descripcion: [
-      'Mirador del Parque es un edificio residencial de escala media ubicado frente a uno de los pulmones verdes más importantes de la ciudad. Su diseño prioriza la relación entre el interior y el paisaje mediante grandes balcones aterrazados.',
-      'El edificio combina una paleta de materiales nobles —piedra clara, madera y vidrio— con espacios comunes cálidos y luminosos. Fue entregado en 2023 y hoy es un referente del barrio.',
+      'Guemes 336 es un edificio residencial de escala media ubicado frente a uno de los pulmones verdes más importantes de la ciudad. Su diseño prioriza la relación entre el interior y el paisaje mediante grandes balcones aterrazados.',
+      'El edificio combina una paleta de materiales nobles —piedra clara y vidrio— con espacios comunes cálidos y luminosos. Fue entregado en 2023 y hoy es un referente del barrio.',
     ],
-    imagenPortada: '/proyectos/mirador-exterior.png',
+    imagenPortada: '/proyectos/G 336/living-2.png',
     galeria: [
-      { src: '/proyectos/mirador-exterior.png', alt: 'Fachada de Mirador del Parque' },
-      { src: '/proyectos/mirador-lobby.png', alt: 'Lobby de Mirador del Parque' },
+      { tipo: 'imagen', src: '/proyectos/G 336/living-1.png', alt: 'Living de Guemes 336' },
+      { tipo: 'imagen', src: '/proyectos/G 336/cocina-1.png', alt: 'Cocina de Guemes 336' },
+      { tipo: 'imagen', src: '/proyectos/G 336/dormitorio-1.png', alt: 'Dormitorio de Guemes 336' },
+      { tipo: 'imagen', src: '/proyectos/G 336/dormitorio-2.png', alt: 'Dormitorio de Guemes 336' },
+      { tipo: 'video', src: '/proyectos/G 336/livingVistas.mp4', alt: 'Video de las vistas de Guemes 336' },
     ],
     video: null,
     destacado: true,
@@ -116,8 +125,8 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/costanera-exterior.png',
     galeria: [
-      { src: '/proyectos/costanera-exterior.png', alt: 'Vista general de Costanera Bay' },
-      { src: '/proyectos/costanera-terraza.png', alt: 'Terraza con vista a la bahía en Costanera Bay' },
+      { tipo: 'imagen', src: '/proyectos/costanera-exterior.png', alt: 'Vista general de Costanera Bay' },
+      { tipo: 'imagen', src: '/proyectos/costanera-terraza.png', alt: 'Terraza con vista a la bahía en Costanera Bay' },
     ],
     video: null,
     destacado: true,
@@ -140,7 +149,7 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/distrito-exterior.png',
     galeria: [
-      { src: '/proyectos/distrito-exterior.png', alt: 'Plaza y edificio de Distrito Central' },
+      { tipo: 'imagen', src: '/proyectos/distrito-exterior.png', alt: 'Plaza y edificio de Distrito Central' },
     ],
     video: null,
   },
@@ -162,7 +171,7 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/altos-obra.png',
     galeria: [
-      { src: '/proyectos/altos-obra.png', alt: 'Obra en construcción de Altos de la Bahía' },
+      { tipo: 'imagen', src: '/proyectos/altos-obra.png', alt: 'Obra en construcción de Altos de la Bahía' },
     ],
     video: null,
   },
@@ -184,8 +193,8 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/nodo-exterior.png',
     galeria: [
-      { src: '/proyectos/nodo-exterior.png', alt: 'Render exterior de Nodo Corporativo' },
-      { src: '/proyectos/nodo-interior.png', alt: 'Interior de oficinas de Nodo Corporativo' },
+      { tipo: 'imagen', src: '/proyectos/nodo-exterior.png', alt: 'Render exterior de Nodo Corporativo' },
+      { tipo: 'imagen', src: '/proyectos/nodo-interior.png', alt: 'Interior de oficinas de Nodo Corporativo' },
     ],
     video: null,
   },
@@ -207,8 +216,31 @@ export const proyectos: Proyecto[] = [
     ],
     imagenPortada: '/proyectos/terrazas-exterior.png',
     galeria: [
-      { src: '/proyectos/terrazas-exterior.png', alt: 'Fachada con terrazas verdes de Terrazas del Sur' },
-      { src: '/proyectos/terrazas-amenities.png', alt: 'Amenities de Terrazas del Sur' },
+      { tipo: 'imagen', src: '/proyectos/terrazas-exterior.png', alt: 'Fachada con terrazas verdes de Terrazas del Sur' },
+      { tipo: 'imagen', src: '/proyectos/terrazas-amenities.png', alt: 'Amenities de Terrazas del Sur' },
+    ],
+    video: null,
+  },
+  {
+    slug: 'terrazas-del-sur',
+    nombre: 'Terrazas del Sur',
+    ubicacion: 'La Plata, Buenos Aires',
+    estado: 'Finalizado',
+    tipo: 'Residencial',
+    anio: 2021,
+    superficie: '12.300 m²',
+    unidades: '64 unidades',
+    avance: 100,
+    resumen:
+      'Edificio de baja altura con terrazas verdes escalonadas y amenities integrados.',
+    descripcion: [
+      'Terrazas del Sur es un edificio residencial de baja altura que hace de las terrazas verdes su gran protagonista. Cada nivel se retira para generar espacios exteriores propios cubiertos de vegetación.',
+      'El proyecto integra amenities de calidad —pileta, gimnasio y salón de usos múltiples— en una escala amable y cercana.',
+    ],
+    imagenPortada: '/proyectos/terrazas-exterior.png',
+    galeria: [
+      { tipo: 'imagen', src: '/proyectos/terrazas-exterior.png', alt: 'Fachada con terrazas verdes de Terrazas del Sur' },
+      { tipo: 'imagen', src: '/proyectos/terrazas-amenities.png', alt: 'Amenities de Terrazas del Sur' },
     ],
     video: null,
   },

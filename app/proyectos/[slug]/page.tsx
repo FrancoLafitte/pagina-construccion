@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { EstadoBadge } from '@/components/estado-badge'
 import { ProyectoGaleria } from '@/components/proyecto-galeria'
-import { ProyectoVideo } from '@/components/proyecto-video'
 import { getProyecto, proyectos } from '@/lib/proyectos'
 
 export function generateStaticParams() {
@@ -75,6 +74,7 @@ export default async function ProyectoDetallePage({
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
         {/* Columna principal */}
         <div>
+          {/* Galería unificada (fotos y videos mezclados) */}
           <ProyectoGaleria imagenes={proyecto.galeria} />
 
           <div className="mt-12">
@@ -87,17 +87,6 @@ export default async function ProyectoDetallePage({
                   {parrafo}
                 </p>
               ))}
-            </div>
-          </div>
-
-          <div className="mt-12">
-            <h2 className="font-display text-2xl font-bold tracking-tight">Video</h2>
-            <div className="mt-4">
-              <ProyectoVideo
-                src={proyecto.video}
-                poster={proyecto.imagenPortada}
-                titulo={proyecto.nombre}
-              />
             </div>
           </div>
         </div>
