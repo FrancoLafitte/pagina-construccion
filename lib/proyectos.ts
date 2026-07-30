@@ -7,9 +7,6 @@
 //
 // Imágenes: subí los archivos a la carpeta /public/proyectos y referenciá la
 // ruta empezando con "/proyectos/tu-imagen.png".
-//
-// Videos: si tenés un video (.mp4), subilo a /public/proyectos y poné su ruta
-// en el campo `video`. Si lo dejás vacío, se muestra un espacio reservado.
 // -----------------------------------------------------------------------------
 
 export type EstadoProyecto = 'En desarrollo' | 'Finalizado' | 'Próximo'
@@ -19,12 +16,6 @@ export type TipoProyecto =
   | 'Corporativo'
   | 'Uso mixto'
   | 'Urbanismo'
-
-export interface MediaItem {
-  tipo: 'imagen' | 'video';
-  url: string;
-  poster?: string; // Opcional, por si querés ponerle una miniatura al video
-}
 
 export interface Proyecto {
   slug: string
@@ -42,9 +33,9 @@ export interface Proyecto {
   /** Párrafos de la descripción completa (uno por elemento del array). */
   descripcion: string[]
   imagenPortada: string
-  galeria: { tipo: 'imagen' | 'video'; src: string; alt: string }[]
-  /** Ruta a un archivo de video .mp4, o null si todavía no hay. */
-  video: string | null
+  galeria?: { tipo: 'imagen' | 'video'; src: string; alt: string }[]
+  galeriaObra?: { tipo: 'imagen' | 'video'; src: string; alt: string }[]
+  galeriaRenders?: { tipo: 'imagen' | 'video'; src: string; alt: string }[]
   destacado?: boolean
 }
 
@@ -77,9 +68,9 @@ export const proyectos: Proyecto[] = [
       { tipo: 'imagen', src: '/proyectos/florida-828/bano-1.jpg', alt: 'Avance de obra de Torre Florida 828' },
       { tipo: 'imagen', src: '/proyectos/florida-828/bano-2.jpg', alt: 'Avance de obra de Torre Florida 828' },
     ],
-    video: null,
     destacado: true,
   },
+
   {
     slug: 'torre-guemes-336',
     nombre: 'Guemes 336',
@@ -103,88 +94,128 @@ export const proyectos: Proyecto[] = [
       { tipo: 'imagen', src: '/proyectos/G 336/dormitorio-1.png', alt: 'Dormitorio de Guemes 336' },
       { tipo: 'imagen', src: '/proyectos/G 336/dormitorio-2.png', alt: 'Dormitorio de Guemes 336' },
       { tipo: 'video', src: '/proyectos/G 336/livingVistas.mp4', alt: 'Video de las vistas de Guemes 336' },
+      { tipo: 'video', src: '/proyectos/G 336/cocina.mp4', alt: 'Video de las vistas de Guemes 336' },
+      { tipo: 'video', src: '/proyectos/G 336/dormitorio-1.mp4', alt: 'Video de las vistas de Guemes 336' },
+      { tipo: 'video', src: '/proyectos/G 336/dormitorio-2.mp4', alt: 'Video de las vistas de Guemes 336' },
+      { tipo: 'video', src: '/proyectos/G 336/livingVistas-2.mp4', alt: 'Video de las vistas de Guemes 336' },
     ],
-    video: null,
     destacado: true,
   },
+
   {
-    slug: 'costanera-bay',
-    nombre: 'Costanera Bay',
-    ubicacion: 'Vicente López, Buenos Aires',
-    estado: 'En desarrollo',
-    tipo: 'Uso mixto',
+    slug: 'guemes-958',
+    nombre: 'Guemes 958',
+    ubicacion: 'Bahia Blanca, Buenos Aires',
+    estado: 'Finalizado',
+    tipo: 'Residencial',
     anio: 2024,
     superficie: '41.200 m²',
     unidades: '210 unidades + retail',
     avance: 38,
     resumen:
-      'Complejo de uso mixto frente a la bahía, con viviendas, comercios y una nueva costanera pública.',
+      'Complejo de uso residencial frente a la bahía, con viviendas, comercios y una nueva costanera pública.',
     descripcion: [
-      'Costanera Bay es un desarrollo de uso mixto que reconvierte un frente costero en un nuevo barrio integrado a la ciudad. El proyecto combina viviendas, locales comerciales y espacio público de calidad.',
+      'Guemes 958 es un desarrollo de uso residencial que reconvierte un frente costero en un nuevo barrio integrado a la ciudad. El proyecto combina viviendas, locales comerciales y espacio público de calidad.',
       'La propuesta incluye una costanera peatonal de acceso libre, pensada como un aporte urbano que trasciende los límites del emprendimiento. Es un ejemplo de cómo entendemos la expansión: crecer sumando ciudad.',
     ],
-    imagenPortada: '/proyectos/costanera-exterior.png',
+    imagenPortada: '/proyectos/G 958/fachadaLejos.jpeg',
     galeria: [
-      { tipo: 'imagen', src: '/proyectos/costanera-exterior.png', alt: 'Vista general de Costanera Bay' },
-      { tipo: 'imagen', src: '/proyectos/costanera-terraza.png', alt: 'Terraza con vista a la bahía en Costanera Bay' },
+      { tipo: 'imagen', src: '/proyectos/G 958/fachadaLejos.jpeg', alt: 'Vista general de Guemes 958' },
+      { tipo: 'imagen', src: '/proyectos/G 958/fachadaCerca.jpeg', alt: 'Vista general de Guemes 958' },
+      { tipo: 'imagen', src: '/proyectos/G 958/terraza-1.jpeg', alt: 'Vista general de Guemes 958' },
+      { tipo: 'imagen', src: '/proyectos/G 958/terraza-2.jpeg', alt: 'Vista general de Guemes 958' },
+      { tipo: 'imagen', src: '/proyectos/G 958/terraza-3.jpeg', alt: 'Vista general de Guemes 958' },
+      { tipo: 'video', src: '/proyectos/G 958/[Depto03].mp4', alt: 'Vista general de Guemes 958' },
+      { tipo: 'video', src: '/proyectos/G 958/[Depto05]_v02.mp4', alt: 'Terraza con vista a la bahía en Guemes 958' },
     ],
-    video: null,
     destacado: true,
   },
+
   {
-    slug: 'distrito-central',
-    nombre: 'Distrito Central',
-    ubicacion: 'Córdoba Capital',
+    slug: 'Thompson-333',
+    nombre: 'Thompson 333',
+    ubicacion: 'bahia Blanca, Buenos Aires',
     estado: 'Finalizado',
-    tipo: 'Uso mixto',
-    anio: 2022,
+    tipo: 'Residencial',
+    anio: 2026,
     superficie: '27.500 m²',
-    unidades: '120 unidades + plaza',
+    unidades: '6 unidades',
     avance: 100,
     resumen:
       'Renovación urbana con planta baja comercial, oficinas y una plaza pública en el corazón de la ciudad.',
     descripcion: [
-      'Distrito Central es un proyecto de renovación urbana que dio nueva vida a una manzana subutilizada del centro. Integra locales comerciales, oficinas y viviendas alrededor de una plaza pública activa durante todo el día.',
+      'Thompson 333 es un proyecto de renovación urbana que dio nueva vida a una manzana subutilizada del centro. Integra locales comerciales, oficinas y viviendas alrededor de una plaza pública activa durante todo el día.',
       'La intervención revitalizó el entorno inmediato y se convirtió en un punto de encuentro para el barrio.',
     ],
-    imagenPortada: '/proyectos/distrito-exterior.png',
+    imagenPortada: '/proyectos/T 333/fachada-1.jpg',
     galeria: [
-      { tipo: 'imagen', src: '/proyectos/distrito-exterior.png', alt: 'Plaza y edificio de Distrito Central' },
+      { tipo: 'imagen', src: '/proyectos/T 333/fachada-1.jpg', alt: 'Fachada del edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/fachada-2.jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/banos-2.jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/banos.jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/barra-cocina.jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/cocina(8).jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/comedor.jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/dormitorio(22).jpg', alt: 'Plaza y edificio de Thompson 333' },
+      { tipo: 'imagen', src: '/proyectos/T 333/living(5).jpg', alt: 'Plaza y edificio de Thompson 333' },
     ],
-    video: null,
+    destacado: false,
   },
+
   {
-    slug: 'altos-de-la-bahia',
-    nombre: 'Altos de la Bahía',
-    ubicacion: 'Bahía Blanca',
+    slug: 'torre-ohiggins-237',
+    nombre: 'Ohiggins 237',
+    ubicacion: 'Bahía Blanca, Buenos Aires',
     estado: 'En desarrollo',
     tipo: 'Residencial',
     anio: 2025,
     superficie: '15.600 m²',
-    unidades: '84 unidades',
-    avance: 20,
+    unidades: '15 unidades',
+    avance: 57,
     resumen:
       'Nueva torre residencial en etapa de estructura, con foco en eficiencia energética.',
     descripcion: [
-      'Altos de la Bahía es una torre residencial que actualmente se encuentra en etapa de estructura. El proyecto incorpora criterios de eficiencia energética desde el diseño: aislación de alto desempeño, ventilación cruzada y energía solar para espacios comunes.',
+      'Ohiggins 237 es una torre residencial que actualmente se encuentra en etapa de estructura. El proyecto incorpora criterios de eficiencia energética desde el diseño: aislación de alto desempeño, ventilación cruzada y energía solar para espacios comunes.',
       'Representa nuestra apuesta por llevar construcción moderna a ciudades en crecimiento.',
     ],
-    imagenPortada: '/proyectos/altos-obra.png',
-    galeria: [
-      { tipo: 'imagen', src: '/proyectos/altos-obra.png', alt: 'Obra en construcción de Altos de la Bahía' },
+    imagenPortada: '/proyectos/O 237/00_Vista general Dia.png',
+    galeriaRenders: [
+      { tipo: 'imagen', src: '/proyectos/O 237/00_Vista general Dia.png', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/00_Vista general Noche.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/A01_Dpto 1 - Semi Piso (1).jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/A01_Dpto 1 - Semi Piso (5).jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Enscape_2026-02-19-11-55-18.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Enscape_2026-02-19-11-59-40.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/GYM 02.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/S.U.M.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Terraza 02.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Terraza Piscina 01.jpg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Terraza Piscina 02.jpg', alt: 'Obra en construcción de Ohiggins 237' },
     ],
-    video: null,
+    galeriaObra: [
+      { tipo: 'imagen', src: '/proyectos/O 237/Videos obra/cocina-enObra.jpeg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'imagen', src: '/proyectos/O 237/Videos obra/cocina-enObra-2.jpeg', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/pasillo-entrada.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/cocina-comedor.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/barra-cocina.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/comedor-vistas.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/balcon.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/pasillo-dormitorio-obra.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/pasillo-dormitorio2-obra.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+      { tipo: 'video', src: '/proyectos/O 237/Videos obra/vistas-obra-1.mp4', alt: 'Obra en construcción de Ohiggins 237' },
+    ],
+    destacado: false,
   },
   {
-    slug: 'nodo-corporativo',
-    nombre: 'Nodo Corporativo',
-    ubicacion: 'Rosario, Santa Fe',
-    estado: 'Próximo',
-    tipo: 'Corporativo',
+    slug: 'vyeites-1045',
+    nombre: 'Edificio Vyeites 1045',
+    ubicacion: 'Bahia Blanca, Buenos Aires',
+    estado: 'En desarrollo',
+    tipo: 'Residencial',
     anio: 2026,
     superficie: '22.800 m²',
     unidades: 'Oficinas AAA',
-    avance: 0,
+    avance: 25,
     resumen:
       'Edificio corporativo clase AAA con plantas flexibles y certificación de sustentabilidad.',
     descripcion: [
@@ -192,57 +223,52 @@ export const proyectos: Proyecto[] = [
       'Apunta a obtener certificación de construcción sustentable, en línea con nuestro compromiso de modernizar el modo en que se construye.',
     ],
     imagenPortada: '/proyectos/nodo-exterior.png',
-    galeria: [
-      { tipo: 'imagen', src: '/proyectos/nodo-exterior.png', alt: 'Render exterior de Nodo Corporativo' },
-      { tipo: 'imagen', src: '/proyectos/nodo-interior.png', alt: 'Interior de oficinas de Nodo Corporativo' },
+    galeriaObra: [
+      { tipo: 'video', src: '/proyectos/V 1045/dormitorio-balcon.mp4', alt: 'Render exterior de Nodo Corporativo' },
+      { tipo: 'video', src: '/proyectos/V 1045/balcon-dormitorio.mp4', alt: 'Interior de oficinas de Nodo Corporativo' },
+      { tipo: 'video', src: '/proyectos/V 1045/hombre-techo.mp4', alt: 'Interior de oficinas de Nodo Corporativo' },
+      { tipo: 'video', src: '/proyectos/V 1045/pasillo pieza.mp4', alt: 'Interior de oficinas de Nodo Corporativo' },
+      { tipo: 'video', src: '/proyectos/V 1045/dormitorio-1.mp4', alt: 'Interior de oficinas de Nodo Corporativo' },
+      { tipo: 'video', src: '/proyectos/V 1045/dormitorio.mp4', alt: 'Interior de oficinas de Nodo Corporativo' },
     ],
-    video: null,
+    destacado: false,
   },
   {
-    slug: 'terrazas-del-sur',
-    nombre: 'Terrazas del Sur',
-    ubicacion: 'La Plata, Buenos Aires',
-    estado: 'Finalizado',
+    slug: 'yrigoyen-358',
+    nombre: 'Edificio Yrigoyen 358',
+    ubicacion: 'Bahia Blanca, Buenos Aires',
+    estado: 'En desarrollo',
     tipo: 'Residencial',
     anio: 2021,
     superficie: '12.300 m²',
     unidades: '64 unidades',
-    avance: 100,
+    avance: 50,
     resumen:
       'Edificio de baja altura con terrazas verdes escalonadas y amenities integrados.',
     descripcion: [
-      'Terrazas del Sur es un edificio residencial de baja altura que hace de las terrazas verdes su gran protagonista. Cada nivel se retira para generar espacios exteriores propios cubiertos de vegetación.',
+      'Edificio Yrigoyen 358 es un edificio residencial de baja altura que hace de las terrazas verdes su gran protagonista. Cada nivel se retira para generar espacios exteriores propios cubiertos de vegetación.',
       'El proyecto integra amenities de calidad —pileta, gimnasio y salón de usos múltiples— en una escala amable y cercana.',
     ],
-    imagenPortada: '/proyectos/terrazas-exterior.png',
-    galeria: [
-      { tipo: 'imagen', src: '/proyectos/terrazas-exterior.png', alt: 'Fachada con terrazas verdes de Terrazas del Sur' },
-      { tipo: 'imagen', src: '/proyectos/terrazas-amenities.png', alt: 'Amenities de Terrazas del Sur' },
+    imagenPortada: '/proyectos/Y 358/dia.png',
+    galeriaRenders: [
+      { tipo: 'imagen', src: '/proyectos/Y 358/dia.png', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/NOCHE.png', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/Render portada revista.jpg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/cocina(1).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/comedor(1).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/comedor(2).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/comedor(3).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/comedor(4).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/dormitorio(1).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/dormitorio(2).jpeg', alt: 'Fachada con terrazas verdes de Edificio Yrigoyen 358' },
     ],
-    video: null,
-  },
-  {
-    slug: 'terrazas-del-sur',
-    nombre: 'Terrazas del Sur',
-    ubicacion: 'La Plata, Buenos Aires',
-    estado: 'Finalizado',
-    tipo: 'Residencial',
-    anio: 2021,
-    superficie: '12.300 m²',
-    unidades: '64 unidades',
-    avance: 100,
-    resumen:
-      'Edificio de baja altura con terrazas verdes escalonadas y amenities integrados.',
-    descripcion: [
-      'Terrazas del Sur es un edificio residencial de baja altura que hace de las terrazas verdes su gran protagonista. Cada nivel se retira para generar espacios exteriores propios cubiertos de vegetación.',
-      'El proyecto integra amenities de calidad —pileta, gimnasio y salón de usos múltiples— en una escala amable y cercana.',
-    ],
-    imagenPortada: '/proyectos/terrazas-exterior.png',
-    galeria: [
-      { tipo: 'imagen', src: '/proyectos/terrazas-exterior.png', alt: 'Fachada con terrazas verdes de Terrazas del Sur' },
-      { tipo: 'imagen', src: '/proyectos/terrazas-amenities.png', alt: 'Amenities de Terrazas del Sur' },
-    ],
-    video: null,
+    galeriaObra: [
+      { tipo: 'imagen', src: '/proyectos/Y 358/En Obra/construyendo(1).jpeg', alt: 'Hormigoneando Edificio Yrigoyen 358' },
+      { tipo: 'imagen', src: '/proyectos/Y 358/En Obra/construyendo(2).jpeg', alt: 'Hormigoneando Edificio Yrigoyen 358' },
+      { tipo: 'video', src: '/proyectos/Y 358/En Obra/hormigoneando(1).mp4', alt: 'Hormigoneando Edificio Yrigoyen 358' },
+      { tipo: 'video', src: '/proyectos/Y 358/En Obra/hormigoneando(2).mp4', alt: 'Hormigoneando Edificio Yrigoyen 358' },
+    ], 
+    destacado: false,
   },
 ]
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
@@ -12,65 +12,83 @@ export interface MediaItem {
 
 export function ProyectoGaleria({ imagenes }: { imagenes: MediaItem[] }) {
   const [activa, setActiva] = useState(0)
-  // Estado para saber si el ítem actual es una imagen vertical
-  const [esVertical, setEsVertical] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  
+  // Referencias para conectar el video de fondo con el principal
+  const mainVideoRef = useRef<HTMLVideoElement>(null)
+  const bgVideoRef = useRef<HTMLVideoElement>(null)
 
   if (!imagenes || imagenes.length === 0) return null
 
   const itemActual = imagenes[activa] || imagenes[0]
+
+  // Función para sincronizar la reproducción al darle play/pause al video principal
+  const handlePlayState = (playing: boolean) => {
+    setIsPlaying(playing)
+    if (bgVideoRef.current) {
+      if (playing) {
+        bgVideoRef.current.play().catch(() => {})
+      } else {
+        bgVideoRef.current.pause()
+      }
+    }
+  }
 
   return (
     <div className="space-y-4">
       {/* Visor Principal (Imagen o Video en Grande) */}
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-muted/80 flex items-center justify-center">
         {itemActual.tipo === 'imagen' ? (
-          <>
-            {/* Si es vertical, mostramos un fondo difuminado sutil para rellenar los costados */}
-            {esVertical && (
-              <div 
-                className="absolute inset-0 bg-cover bg-center blur-xl opacity-30 scale-110 pointer-events-none"
-                style={{ backgroundImage: `url(${itemActual.src || '/placeholder.svg'})` }}
+          <div className="relative h-full w-full flex items-center justify-center bg-black overflow-hidden">
+            {/* Fondo difuminado real usando Next/Image */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <Image
+                src={itemActual.src || '/placeholder.svg'}
+                alt=""
+                fill
+                sizes="100vw"
+                className="h-full w-full object-cover blur-2xl opacity-40 scale-110"
               />
-            )}
+            </div>
             
+            {/* Imagen principal nítida */}
             <Image
               key={itemActual.src}
               src={itemActual.src || '/placeholder.svg'}
               alt={itemActual.alt || 'Imagen principal'}
               fill
               priority
+              loading="eager"
               sizes="(max-width: 1024px) 100vw, 66vw"
-              className={cn(
-                "relative z-10 transition-all duration-300",
-                esVertical ? "object-contain p-2" : "object-cover"
-              )}
-              onLoad={(e) => {
-                const img = e.currentTarget
-                if (img.naturalHeight > img.naturalWidth) {
-                  setEsVertical(true)
-                } else {
-                  setEsVertical(false)
-                }
-              }}
+              className="relative z-10 object-contain p-2 transition-all duration-300"
             />
-          </>
+          </div>
         ) : (
-          
-          <div className="relative h-full w-full flex items-center justify-center bg-black/9onda">
-            {/* Fondo difuminado sutil usando el mismo video */}
+          <div className="relative h-full w-full flex items-center justify-center bg-black overflow-hidden">
+            {/* Fondo difuminado que ahora se sincroniza con el estado de reproducción */}
             <video
+              ref={bgVideoRef}
+              key={`bg-${itemActual.src}`}
               src={itemActual.src}
+              muted
+              loop
+              playsInline
               preload="metadata"
-              className="absolute inset-0 h-full w-full object-cover blur-xl opacity-30 scale-110 pointer-events-none"
+              className="absolute inset-0 h-full w-full object-cover blur-2xl opacity-40 scale-110 pointer-events-none"
             />
             
-            {/* Video principal con sus proporciones reales */}
+            {/* Video principal con sus controles y eventos de reproducción */}
             <video
-              key={itemActual.src}
+              ref={mainVideoRef}
+              key={`main-${itemActual.src}`}
               src={itemActual.src}
               controls
+              playsInline
               preload="metadata"
-              className="relative z-10 h-full w-full object-contain max-h-[500px]"
+              onPlay={() => handlePlayState(true)}
+              onPause={() => handlePlayState(false)}
+              onEnded={() => handlePlayState(false)}
+              className="relative z-10 h-full w-full object-contain"
             />
           </div>
         )}
@@ -79,13 +97,13 @@ export function ProyectoGaleria({ imagenes }: { imagenes: MediaItem[] }) {
       {/* Miniaturas de la Galería (tanto para fotos como videos) */}
       {imagenes.length > 1 && (
         <div className="grid grid-cols-4 gap-3 sm:grid-cols-5">
-          {imagenes.map((item, i) => (
+          {imagenes.filter(Boolean).map((item, i) => (
             <button
-              key={`${item.src}-${i}`}
+              key={`${item.src || 'media'}-${i}`}
               type="button"
               onClick={() => {
                 setActiva(i)
-                if (item.tipo === 'video') setEsVertical(false)
+                setIsPlaying(false)
               }}
               className={cn(
                 'relative aspect-square w-full overflow-hidden rounded-lg border-2 transition-all cursor-pointer bg-black',
@@ -94,7 +112,7 @@ export function ProyectoGaleria({ imagenes }: { imagenes: MediaItem[] }) {
                   : 'border-transparent opacity-70 hover:opacity-100',
               )}
             >
-              {item.tipo === 'imagen' ? (
+              {item?.tipo === 'imagen' ? (
                 <Image
                   src={item.src || '/placeholder.svg'}
                   alt={item.alt || `Miniatura ${i}`}
@@ -105,7 +123,7 @@ export function ProyectoGaleria({ imagenes }: { imagenes: MediaItem[] }) {
               ) : (
                 <div className="flex h-full w-full items-center justify-center relative">
                   <video
-                    src={item.src}
+                    src={item?.src}
                     preload="metadata"
                     className="h-full w-full object-cover opacity-60"
                   />

@@ -68,7 +68,7 @@ export function Enfoque() {
           <div className="lg:col-span-6">
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border shadow-xl bg-muted">
               <Image
-                src="/proyectos\G 958\WhatsApp Image 2026-05-05 at 11.18.35 AM (1).jpeg" // Reemplaza por la ruta de tu foto de obra
+                src="/proyectos\G 958\fachadaLejos.jpeg" // Reemplaza por la ruta de tu foto de obra
                 alt="Enfoque de construcción y trabajo en obra"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"

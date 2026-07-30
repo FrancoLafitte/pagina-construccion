@@ -73,11 +73,35 @@ export default async function ProyectoDetallePage({
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1.7fr_1fr] lg:gap-12">
         {/* Columna principal */}
-        <div>
-          {/* Galería unificada (fotos y videos mezclados) */}
-          <ProyectoGaleria imagenes={proyecto.galeria} />
+        <div className="space-y-12">
+          {/* Opción A: Si el proyecto tiene galería de renders separada */}
+          {proyecto.galeriaRenders && proyecto.galeriaRenders.length > 0 ? (
+            <div className="space-y-4">
+              <div>
+                <h2 className="font-display text-2xl font-bold tracking-tight">Renders del proyecto</h2>
+                <p className="text-sm text-muted-foreground">Así es como se proyecta la obra finalizada.</p>
+              </div>
+              <ProyectoGaleria imagenes={proyecto.galeriaRenders} />
+            </div>
+          ) : (
+            /* Opción B: Si usa la galería unificada tradicional */
+            proyecto.galeria && proyecto.galeria.length > 0 && (
+              <ProyectoGaleria imagenes={proyecto.galeria} />
+            )
+          )}
 
-          <div className="mt-12">
+          {/* Si el proyecto tiene galería de avance de obra separada */}
+          {proyecto.galeriaObra && proyecto.galeriaObra.length > 0 && (
+            <div className="space-y-4 border-t border-border pt-10">
+              <div>
+                <h2 className="font-display text-2xl font-bold tracking-tight">Avance de obra</h2>
+                <p className="text-sm text-muted-foreground">Registro fotográfico y audiovisual del estado actual de construcción.</p>
+              </div>
+              <ProyectoGaleria imagenes={proyecto.galeriaObra} />
+            </div>
+          )}
+
+          <div className="border-t border-border pt-10">
             <h2 className="font-display text-2xl font-bold tracking-tight">
               Sobre el proyecto
             </h2>
